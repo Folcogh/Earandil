@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(Aerandil VERSION 0.1 LANGUAGES CXX)
+project(Earandil VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -15,43 +15,65 @@ find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
 set(PROJECT_SOURCES
+        DlgDocAdd.hpp
+        DlgDocAdd.cpp
+        DlgDocAdd.ui
+        DlgDocSetPath.hpp
+        DlgDocSetPath.cpp
+        DlgDocSetPath.ui
+        DlgEditDocument.hpp
+        DlgEditDocument.cpp
+        DlgEditDocument.ui
+        DlgSetDBFile.hpp
+        DlgSetDBFile.cpp
+        DlgSetDBFile.ui
+        Document.hpp
+        Document.cpp
+        Languages.hpp
+        Languages.cpp
         main.cpp
-        MainWindow.cpp
         MainWindow.hpp
+        MainWindow.cpp
         MainWindow.ui
+        Settings.hpp
+        Settings.cpp
+        WorkingDB.hpp
+        WorkingDB.cpp
+        TODO.txt
+        Global.hpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(Aerandil
+    qt_add_executable(Earandil
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
     )
 # Define target properties for Android with Qt 6 as:
-#    set_property(TARGET Aerandil APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
+#    set_property(TARGET Earandil APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
 #                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
 # For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
 else()
     if(ANDROID)
-        add_library(Aerandil SHARED
+        add_library(Earandil SHARED
             ${PROJECT_SOURCES}
         )
 # Define properties for Android with Qt 5 after find_package() calls as:
 #    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
     else()
-        add_executable(Aerandil
+        add_executable(Earandil
             ${PROJECT_SOURCES}
         )
     endif()
 endif()
 
-target_link_libraries(Aerandil PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(Earandil PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
-set_target_properties(Aerandil PROPERTIES
+set_target_properties(Earandil PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
 )
 
 if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(Aerandil)
+    qt_finalize_executable(Earandil)
 endif()

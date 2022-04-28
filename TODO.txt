@@ -1,0 +1,83 @@
+TODO
+====
+
+- add a close DB item in File menu
+- fully rework WorkingDB::openDB()
+- add kbd shortcuts to menu actions
+- DlgSetDBFile -> make the QFileDialog pop when clicking the QLineEdit field
+- inline QSettings::cleanRecentDatabases() ?
+- DlgDocSetPath, DlgSetDBFile: ENTER key must validate the dialog
+- take a look at the Qt PDF module. Anything interesting to do?
+- in clean database, clean useless machines. Here or there. Anyway, offer a way to merge/clean unwanted machines
+- in documentation menu: add "Open doc folder"
+- Set window titles more explicit...
+
+CONCEPTS
+========
+
+Country -> Customer -> Line -> Machine
+--------------------------------------
+
+    Country
+        - String list
+
+    Customer
+        - Country ID
+        - Localisation
+        - Line list
+
+    Line
+        - Customer ID
+        - Name
+        - Machine list
+
+    Machine
+        - Line ID
+        - Type
+        - HW revision
+        - SN
+
+
+Docs
+----
+
+- Type
+- #
+- Revision
+- Language
+- Machine
+- HW revision
+- From SN
+- To SN
+
+
+SPECS
+=====
+
+Data saved
+----------
+
+DB + docs folder in config (registry)
+
+
+Startup
+-------
+
+- Unserialize DB
+- Scan doc folder
+- Check that every DB entry has its doc
+- Check for unknown documentations and offer to register them
+
+
+UI
+--
+
+Use ShellExecute to open docs
+
+
+Tools
+-----
+
+- Remove unnecessary docs
+- Remove orphean country/customer/line
+- Check for obsolete docs and update them

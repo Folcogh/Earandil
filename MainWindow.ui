@@ -6,16 +6,95 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>903</width>
+    <height>742</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
-  <widget class="QMenuBar" name="menubar"/>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="QTabWidget" name="Tabs">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="TabDocs">
+       <attribute name="title">
+        <string>Docs</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="TabMachines">
+       <attribute name="title">
+        <string>Machines</string>
+       </attribute>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QStatusBar" name="StatusBar"/>
+  <action name="ActionNew">
+   <property name="text">
+    <string>New</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="ActionOpen">
+   <property name="text">
+    <string>Open</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="ActionSave">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Save</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="ActionSaveAs">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Save as...</string>
+   </property>
+  </action>
+  <action name="ActionQuit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+  </action>
+  <action name="ActionAddDocumentation">
+   <property name="text">
+    <string>Add documentation</string>
+   </property>
+  </action>
+  <action name="ActionCleanDatabase">
+   <property name="text">
+    <string>Clean database</string>
+   </property>
+  </action>
+  <action name="ActionUpdateDocumentation">
+   <property name="text">
+    <string>Update documentation</string>
+   </property>
+  </action>
+  <action name="ActionSetDocumentationPath">
+   <property name="text">
+    <string>Set path</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

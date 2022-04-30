@@ -15,6 +15,10 @@
 #define RECENT_MAX_COUNT 5
 
 // User defined roles0
-#define DOCUMENT_ROLE Qt::UserRole
+#define DOC_PROPERTY_ROLE Qt::UserRole
+
+// Machine serial number
+#define SN_PREFIX_LENGTH 5
+#define SN_SUFFIX_LENGTH 5
 
 #endif // GLOBAL_HPP

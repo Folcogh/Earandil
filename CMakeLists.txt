@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(Earandil VERSION 0.1 LANGUAGES CXX)
+project(Earandil VERSION 1.0 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -15,18 +15,18 @@ find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
 set(PROJECT_SOURCES
-        DlgDocAdd.hpp
-        DlgDocAdd.cpp
-        DlgDocAdd.ui
-        DlgDocSetPath.hpp
-        DlgDocSetPath.cpp
-        DlgDocSetPath.ui
-        DlgEditDocument.hpp
-        DlgEditDocument.cpp
-        DlgEditDocument.ui
-        DlgSetDBFile.hpp
-        DlgSetDBFile.cpp
-        DlgSetDBFile.ui
+        Dialog/AddDocumentation.hpp
+        Dialog/AddDocumentation.cpp
+        Dialog/AddDocumentation.ui
+        Dialog/EditDocPath.hpp
+        Dialog/EditDocPath.cpp
+        Dialog/EditDocPath.ui
+        Dialog/EditDocProperty.hpp
+        Dialog/EditDocProperty.cpp
+        Dialog/EditDocProperty.ui
+        Dialog/SetDBFilename.hpp
+        Dialog/SetDBFilename.cpp
+        Dialog/SetDBFilename.ui
         Document.hpp
         Document.cpp
         Languages.hpp
@@ -37,8 +37,15 @@ set(PROJECT_SOURCES
         MainWindow.ui
         Settings.hpp
         Settings.cpp
+        Validator/ValidatorSN_full.hpp
+        Validator/ValidatorSN_full.cpp
+        Validator/ValidatorSN_suffix.hpp
+        Validator/ValidatorSN_suffix.cpp
+        Validator/ValidatorDevStep.hpp
+        Validator/ValidatorDevStep.cpp
         WorkingDB.hpp
         WorkingDB.cpp
+        SPECS.txt
         TODO.txt
         Global.hpp
 )

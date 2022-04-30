@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>DlgSetDBFile</class>
- <widget class="QDialog" name="DlgSetDBFile">
+ <class>EditDocPath</class>
+ <widget class="QDialog" name="EditDocPath">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>683</width>
-    <height>104</height>
+    <width>720</width>
+    <height>76</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -21,44 +21,28 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QGridLayout" name="GLayoutInput">
-     <item row="1" column="1">
-      <widget class="QLineEdit" name="EditName"/>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="LabelName">
-       <property name="text">
-        <string>Internal name:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QPushButton" name="ButtonBrowse">
-       <property name="text">
-        <string>Browse...</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
+    <layout class="QHBoxLayout" name="HLayoutPath">
+     <item>
       <widget class="QLabel" name="LabelPath">
        <property name="text">
-        <string>Database file:</string>
+        <string>Documentation path:</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="EditFilename">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
+     <item>
+      <widget class="QLineEdit" name="EditPath">
        <property name="minimumSize">
         <size>
          <width>500</width>
          <height>0</height>
         </size>
        </property>
-       <property name="readOnly">
-        <bool>true</bool>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="ButtonBrowse">
+       <property name="text">
+        <string>Browse...</string>
        </property>
       </widget>
      </item>
@@ -81,6 +65,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="ButtonOK">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>OK</string>
        </property>
@@ -97,13 +84,6 @@
    </item>
   </layout>
  </widget>
- <tabstops>
-  <tabstop>EditFilename</tabstop>
-  <tabstop>EditName</tabstop>
-  <tabstop>ButtonBrowse</tabstop>
-  <tabstop>ButtonOK</tabstop>
-  <tabstop>ButtonCancel</tabstop>
- </tabstops>
  <resources/>
  <connections/>
 </ui>

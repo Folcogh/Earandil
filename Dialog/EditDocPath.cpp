@@ -1,13 +1,13 @@
-#include "DlgDocSetPath.hpp"
-#include "ui_DlgDocSetPath.h"
+#include "EditDocPath.hpp"
+#include "ui_EditDocPath.h"
 #include <QDir>
 #include <QFileDialog>
 #include <QLineEdit>
 #include <QPushButton>
 
-DlgDocSetPath::DlgDocSetPath(QString title, QWidget* parent)
+EditDocPath::EditDocPath(QString title, QWidget* parent)
     : QDialog(parent)
-    , ui(new Ui::DlgDocSetPath)
+    , ui(new Ui::EditDocPath)
 {
     ui->setupUi(this);
     setWindowTitle(title);
@@ -19,15 +19,15 @@ DlgDocSetPath::DlgDocSetPath(QString title, QWidget* parent)
     connect(ui->ButtonBrowse, &QPushButton::clicked, [this]() { browse(); });
 }
 
-DlgDocSetPath::~DlgDocSetPath()
+EditDocPath::~EditDocPath()
 {
     delete ui;
 }
 
-QString DlgDocSetPath::newPath(QWidget* parent)
+QString EditDocPath::newPath(QWidget* parent)
 {
     QString path;
-    DlgDocSetPath* dlg = new DlgDocSetPath("Select documentation path", parent);
+    EditDocPath* dlg = new EditDocPath("Select documentation path", parent);
     dlg->updateButtonOK(); // Need to call it manually because it won't be triggered on dialog creation
 
     if (dlg->exec() == QDialog::Accepted) {
@@ -38,9 +38,9 @@ QString DlgDocSetPath::newPath(QWidget* parent)
     return path;
 }
 
-QString DlgDocSetPath::editPath(QString path, QWidget* parent)
+QString EditDocPath::editPath(QString path, QWidget* parent)
 {
-    DlgDocSetPath* Dlg = new DlgDocSetPath("Select documentation path", parent);
+    EditDocPath* Dlg = new EditDocPath("Select documentation path", parent);
     Dlg->ui->EditPath->setText(path);
 
     if (Dlg->exec() == QDialog::Accepted) {
@@ -54,7 +54,7 @@ QString DlgDocSetPath::editPath(QString path, QWidget* parent)
     return path;
 }
 
-void DlgDocSetPath::browse()
+void EditDocPath::browse()
 {
     // Set a default path if it doesn't exist
     QString path = ui->EditPath->text();
@@ -73,7 +73,7 @@ void DlgDocSetPath::browse()
 //
 // Button OK is enabled only if the path is valid (and absolute, because else an empty string is valid)
 //
-void DlgDocSetPath::updateButtonOK()
+void EditDocPath::updateButtonOK()
 {
     QString path = ui->EditPath->text();
     QDir dir(path);

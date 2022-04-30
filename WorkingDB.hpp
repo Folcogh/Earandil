@@ -40,9 +40,10 @@ class WorkingDB
     QString Filename;                   // Full path + filename of the db
     QString Path;                       // Path to the documentation files
     QStringList UnlinkedDocumentations; // List of documentation files which are not added yet to the database
-    QList<Document*> Documents;         // List of registered documents. May contain orpheans
+    QList<DocProperty*> DocProp;        // List of registered documents. May contain orpheans
 
     WorkingDB();
+    ~WorkingDB();
     void refreshDocuments();
     void parseDocDirectory();
 };

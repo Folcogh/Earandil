@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>DlgEditDocument</class>
- <widget class="QDialog" name="DlgEditDocument">
+ <class>EditDocProperty</class>
+ <widget class="QDialog" name="EditDocProperty">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -31,7 +31,14 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="EditDevStep"/>
+      <widget class="QLineEdit" name="EditDevStep">
+       <property name="maxLength">
+        <number>5</number>
+       </property>
+       <property name="placeholderText">
+        <string>100, 150, 300, ...</string>
+       </property>
+      </widget>
      </item>
      <item row="3" column="0">
       <widget class="QLabel" name="LabelFromSN">
@@ -41,7 +48,14 @@
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="EditFromSN"/>
+      <widget class="QLineEdit" name="EditFromSN">
+       <property name="maxLength">
+        <number>11</number>
+       </property>
+       <property name="placeholderText">
+        <string>12345/67890</string>
+       </property>
+      </widget>
      </item>
      <item row="4" column="0">
       <widget class="QLabel" name="LabelToSN">
@@ -51,7 +65,11 @@
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QLineEdit" name="EditToSN"/>
+      <widget class="QLineEdit" name="EditToSN">
+       <property name="placeholderText">
+        <string>67890</string>
+       </property>
+      </widget>
      </item>
      <item row="1" column="1">
       <widget class="QComboBox" name="ComboMachine">

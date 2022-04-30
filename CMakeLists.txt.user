@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 7.0.0, 2022-04-28T10:00:18. -->
+<!-- Written by QtCreator 7.0.0, 2022-04-29T12:55:12. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -113,7 +113,7 @@
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <valuelist type="QVariantList" key="CMakeProjectManager.MakeStep.BuildTargets">
-       <value type="QString">ALL_BUILD</value>
+       <value type="QString">all</value>
       </valuelist>
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
       <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Build</value>
@@ -218,7 +218,7 @@
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">C:/Users/frdemolinsm/OneDrive - Tetra Pak/Dev/build-Earandil-Desktop_Qt_6_2_4_MSVC2019_64bit-Debug/Debug</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">C:/Users/frdemolinsm/OneDrive - Tetra Pak/Dev/build-Earandil-Desktop_Qt_6_2_4_MSVC2019_64bit-Debug</value>
    </valuemap>
    <value type="qlonglong" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
   </valuemap>

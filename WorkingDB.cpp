@@ -1,7 +1,7 @@
 #include "WorkingDB.hpp"
-#include "DlgDocAdd.hpp"
-#include "DlgDocSetPath.hpp"
-#include "DlgSetDBFile.hpp"
+#include "Dialog/AddDocumentation.hpp"
+#include "Dialog/EditDocPath.hpp"
+#include "Dialog/SetDBFilename.hpp"
 #include "Document.hpp"
 #include "Global.hpp"
 #include <QDataStream>
@@ -36,6 +36,11 @@ WorkingDB::WorkingDB()
 {
 }
 
+WorkingDB::~WorkingDB()
+{
+    qDeleteAll(this->DocProp.begin(), this->DocProp.end());
+}
+
 bool WorkingDB::newDB(QWidget* parent)
 {
     // Use temporary vars to keep the current database alive if the user cancels creation process
@@ -49,13 +54,13 @@ bool WorkingDB::newDB(QWidget* parent)
     }
 
     // Define a documentation path
-    path = DlgDocSetPath::newPath(parent);
+    path = EditDocPath::newPath(parent);
     if (path.isNull()) {
         return false;
     }
 
     // Define a db file
-    if (!DlgSetDBFile::newDBFile(parent, filename, name)) {
+    if (!SetDBFilename::newFilename(parent, filename, name)) {
         return false;
     }
 
@@ -145,8 +150,8 @@ void WorkingDB::refreshDocuments()
     // Set the Orphean count accordingly.
     this->Orpheans = 0;
 
-    for (int i = 0; i < this->Documents.size(); i++) {                  // Parse Document list
-        QString DocFilename = this->Documents.at(i)->getFilename();     // Filename in Document
+    for (int i = 0; i < this->DocProp.size(); i++) {                    // Parse Document list
+        QString DocFilename = this->DocProp.at(i)->getFilename();       // Filename in Document
         bool Match          = false;                                    // Default: no linked documentation
         for (int u = 0; u < this->UnlinkedDocumentations.size(); u++) { // Parse unlinked doc files
             QFileInfo Info(this->UnlinkedDocumentations.at(u));         // Read doc file name
@@ -159,28 +164,29 @@ void WorkingDB::refreshDocuments()
 
         // Update orphean status (WorkingDB + Document)
         if (Match) {                                  // Match found
-            this->Documents.at(i)->setOrphean(false); // So flag Document as linked
+            this->DocProp.at(i)->setOrphean(false);   // So flag Document as linked
         }
         else {
             this->Orpheans++;                        // Else update orphean count
-            this->Documents.at(i)->setOrphean(true); // And flag Document as orphean
+            this->DocProp.at(i)->setOrphean(true);   // And flag Document as orphean
         }
     }
 }
 
 bool WorkingDB::docAdd(QWidget* parent)
 {
-    bool ret;
+    bool ret = false;
 
     refreshDocuments();
-    QList<Document*> list = DlgDocAdd::addDocumentations(parent);
-    if (!list.isEmpty()) {
-        this->Documents.append(list);
-        ret = true;
+    if (this->UnlinkedDocumentations.isEmpty()) {
+        QMessageBox::information(parent, WINDOW_TITLE, "No new document to add to the database");
     }
     else {
-        QMessageBox::information(parent, WINDOW_TITLE, "No new document to add to the database");
-        ret = false;
+        QList<DocProperty*> list = AddDocumentation::addDocumentation(parent);
+        if (!list.isEmpty()) {
+            this->DocProp.append(list);
+            ret = true;
+        }
     }
     return ret;
 }

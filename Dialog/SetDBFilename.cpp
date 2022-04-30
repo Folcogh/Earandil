@@ -1,14 +1,14 @@
-#include "DlgSetDBFile.hpp"
+#include "SetDBFilename.hpp"
 #include "Global.hpp"
-#include "ui_DlgSetDBFile.h"
+#include "ui_SetDBFilename.h"
 #include <QDir>
 #include <QFileDialog>
 #include <QLineEdit>
 #include <QPushButton>
 
-DlgSetDBFile::DlgSetDBFile(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::DlgSetDBFile)
+SetDBFilename::SetDBFilename(QWidget* parent)
+    : QDialog(parent)
+    , ui(new Ui::SetDBFilename)
 {
     ui->setupUi(this);
     setWindowTitle(WINDOW_TITLE);
@@ -21,15 +21,15 @@ DlgSetDBFile::DlgSetDBFile(QWidget *parent) :
     connect(ui->ButtonOK, &QPushButton::clicked, [this]() { accept(); });
 }
 
-DlgSetDBFile::~DlgSetDBFile()
+SetDBFilename::~SetDBFilename()
 {
     delete ui;
 }
 
-bool DlgSetDBFile::newDBFile(QWidget* window, QString& filename, QString& name)
+bool SetDBFilename::newFilename(QWidget* window, QString& filename, QString& name)
 {
     bool ret          = false;
-    DlgSetDBFile* dlg = new DlgSetDBFile(window);
+    SetDBFilename* dlg = new SetDBFilename(window);
 
     if (dlg->exec() == QDialog::Accepted) {
         filename = dlg->ui->EditFilename->text();
@@ -41,7 +41,7 @@ bool DlgSetDBFile::newDBFile(QWidget* window, QString& filename, QString& name)
     return ret;
 }
 
-void DlgSetDBFile::browse()
+void SetDBFilename::browse()
 {
     // Default directory: use the existing one if one was already selected, else fall back to default (home path)
     QString dir;
@@ -63,7 +63,7 @@ void DlgSetDBFile::browse()
     ui->EditFilename->setText(filename);
 }
 
-void DlgSetDBFile::updateButtonOK()
+void SetDBFilename::updateButtonOK()
 {
     // We want both fields filled to validate the dialog
     bool enabled = !(ui->EditFilename->text().isEmpty() || ui->EditName->text().isEmpty());

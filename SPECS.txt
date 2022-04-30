@@ -1,0 +1,63 @@
+CONCEPTS
+========
+
+Country -> Customer -> Line -> Machine
+--------------------------------------
+
+    Country
+        - String list
+
+    Customer
+        - Country ID
+        - Localisation
+        - Line list
+
+    Line
+        - Customer ID
+        - Name
+        - Machine list
+
+    Machine
+        - Line ID
+        - Type
+        - HW revision
+        - SN
+
+
+Docs
+----
+
+- Type
+- #
+- Revision
+- Language
+- Machine
+- HW revision
+- From SN
+- To SN
+
+
+SPECS
+=====
+
+Data saved
+----------
+
+DB + docs folder in config (registry)
+
+
+Startup
+-------
+
+- Unserialize DB
+- Scan doc folder
+- Check that every DB entry has its doc
+- Check for unknown documentations and offer to register them
+
+
+Tools
+-----
+
+- Remove unnecessary docs
+- Remove orphean country/customer/line
+- Check for obsolete docs and update them

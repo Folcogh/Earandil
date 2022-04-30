@@ -1,19 +1,19 @@
-#ifndef DLGDOCSETPATH_HPP
-#define DLGDOCSETPATH_HPP
+#ifndef EDITDOCPATH_HPP
+#define EDITDOCPATH_HPP
 
 #include <QDialog>
 #include <QString>
 
 namespace Ui {
-class DlgDocSetPath;
+class EditDocPath;
 }
 
-//  DlgDocSetPath
+//  EditDocPath
 //
 // This class ask for a documentation path, and return a null string is the user cancelled the dialog
 // Else return a valid path
 //
-class DlgDocSetPath : public QDialog
+class EditDocPath : public QDialog
 {
     Q_OBJECT
 
@@ -22,11 +22,11 @@ class DlgDocSetPath : public QDialog
     static QString editPath(QString path, QWidget* parent);
 
   private:
-    Ui::DlgDocSetPath* ui;
-    DlgDocSetPath(QString title, QWidget* parent);
-    ~DlgDocSetPath() override;
+    Ui::EditDocPath* ui;
+    EditDocPath(QString title, QWidget* parent);
+    ~EditDocPath() override;
     void browse();
     void updateButtonOK();
 };
 
-#endif // DLGDOCSETPATH_HPP
+#endif // EDITDOCPATH_HPP

@@ -13,9 +13,11 @@
 class WorkingDB
 {
   public:
+    // Singleton
     static WorkingDB* instance();
     static void release();
 
+    // Menus
     bool newDB(QWidget* parent);
     bool openDB(QWidget* parent);
     bool save();
@@ -23,13 +25,19 @@ class WorkingDB
 
     bool docAdd(QWidget* parent);
 
+    // Predicates
     bool isActive() const { return Active; }
     bool isModified() const { return Modified; }
     bool hasOrpheans() const { return Orpheans != 0; }
 
+    // Getters
     QString getFilename() const { return this->Filename; }
     QStringList getUnlinkedDocs() const { return this->UnlinkedDocumentations; }
     QString getDocPath() const { return this->Path; }
+    QStringList getMachineList() const { return this->MachineList; }
+
+    // Misc
+    void addMachine(QString machine);
 
   private:
     static WorkingDB* workingdb;        // Instance ptr
@@ -41,6 +49,7 @@ class WorkingDB
     QString Path;                       // Path to the documentation files
     QStringList UnlinkedDocumentations; // List of documentation files which are not added yet to the database
     QList<DocProperty*> DocProp;        // List of registered documents. May contain orpheans
+    QStringList MachineList;            // List of known machine name
 
     WorkingDB();
     ~WorkingDB();

@@ -10,6 +10,7 @@
 #include <QFileInfo>
 #include <QList>
 #include <QMessageBox>
+#include <algorithm>
 
 WorkingDB* WorkingDB::workingdb = nullptr;
 
@@ -189,4 +190,12 @@ bool WorkingDB::docAdd(QWidget* parent)
         }
     }
     return ret;
+}
+
+void WorkingDB::addMachine(QString machine)
+{
+    if (!this->MachineList.contains(machine)) {
+        this->MachineList.append(machine);
+        std::sort(this->MachineList.begin(), this->MachineList.end());
+    }
 }

@@ -3,6 +3,7 @@
 #include "Validator/ValidatorDevStep.hpp"
 #include "Validator/ValidatorSN_full.hpp"
 #include "Validator/ValidatorSN_suffix.hpp"
+#include "WorkingDB.hpp"
 #include "ui_EditDocProperty.h"
 #include <QComboBox>
 #include <QLineEdit>
@@ -16,9 +17,15 @@ EditDocProperty::EditDocProperty(QWidget* parent, QString filename)
     adjustSize();
     ui->LabelFilename->setText(filename);
 
+    // Set machine list
+    ui->ComboMachine->addItems(WorkingDB::instance()->getMachineList());
+
     // Connections
     connect(ui->ButtonCancel, &QPushButton::clicked, [this]() { reject(); });
-    connect(ui->ButtonOK, &QPushButton ::clicked, [this]() { accept(); });
+    connect(ui->ButtonOK, &QPushButton ::clicked, [this]() {
+        WorkingDB::instance()->addMachine(ui->ComboMachine->currentText());
+        accept();
+    });
     connect(ui->EditDevStep, &QLineEdit::textChanged, [this]() { updateButtonOK(); });
     connect(ui->EditFromSN, &QLineEdit::textChanged, [this]() { updateButtonOK(); });
     connect(ui->EditToSN, &QLineEdit::textChanged, [this]() { updateButtonOK(); });
@@ -31,6 +38,9 @@ EditDocProperty::EditDocProperty(QWidget* parent, QString filename)
 
     ValidatorSN_full* validatorsnfull = new ValidatorSN_full(this);
     ui->EditFromSN->setValidator(validatorsnfull);
+
+    ValidatorDevStep* validatordevstep = new ValidatorDevStep(this);
+    ui->EditDevStep->setValidator(validatordevstep);
 
     // Make UI consistent
     updateButtonOK();

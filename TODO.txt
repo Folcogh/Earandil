@@ -1,9 +1,6 @@
-TODO
-====
-
 - add a close DB item in File menu
 - fully rework WorkingDB::openDB()
-- add kbd shortcuts to menu actions
+- add kbd shortcuts to menu actions (global shortcuts)
 - DlgSetDBFile -> make the QFileDialog pop when clicking the QLineEdit field
 - inline QSettings::cleanRecentDatabases() ?
 - DlgDocSetPath, DlgSetDBFile: ENTER key must validate the dialog
@@ -13,7 +10,7 @@ TODO
 - Set window titles more explicit...
 + Make WorkingDB delete its DocProp* list
 + write DlgEditDocument SN/DevStep validators
-- DldEditDocument: grab machine list from WorkingDB instance
++ DldEditDocument: grab machine list from WorkingDB instance
 + add a placeholder in SetDBFilename::internal name
 + SetDBFilename::validate filename??
 + EditDocProperty: validate that ToSN_suffix is > FromSN_suffix

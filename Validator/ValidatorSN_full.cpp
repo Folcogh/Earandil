@@ -24,20 +24,20 @@ QValidator::State ValidatorSN_full::validate(QString& input, int& pos) const
         // Check SN prefix
         for (i = 0; i < SN_PREFIX_LENGTH; i++) {
             if (!input.at(i).isDigit()) {
-                state = QValidator::Intermediate;
+                state = QValidator::Invalid;
                 break;
             }
         }
 
         // Check separator
         if (input.at(i++) != QChar('/')) {
-            state = QValidator::Intermediate;
+            state = QValidator::Invalid;
         }
 
         // Check suffix
         for (; i < Size; i++) {
             if (!input.at(i).isDigit()) {
-                state = QValidator::Intermediate;
+                state = QValidator::Invalid;
                 break;
             }
         }

@@ -30,6 +30,7 @@ class DocProperty
     DocProperty(QString StrNumber, QString Machine, QString DevStep, QString FromSN, QString ToSN, bool Orphean = true);
     QString getFilename() const { return this->StrNumber; }
     void setOrphean(bool orphean) { this->Orphean = orphean; }
+    void getData(QString& StrNumber, QString& Machine, int& DevStep, int& SN_prefix, int& FromSN, int& ToSN) const;
 
   private:
     // Description saved in the data file
@@ -49,7 +50,8 @@ class DocProperty
 };
 
 // Serialization
-QDataStream& operator>>(QDataStream& stream, DocProperty** document);
+QDataStream& operator>>(QDataStream& stream, DocProperty** docprop);
+QDataStream& operator<<(QDataStream& stream, const DocProperty* docprop);
 
 // Document* is used as data type in widgets
 Q_DECLARE_METATYPE(DocProperty*)

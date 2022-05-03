@@ -76,7 +76,7 @@ QList<DocProperty*> AddDocumentation::addDocumentation(QWidget* parent)
     AddDocumentation* dlg = new AddDocumentation(parent);
     if (dlg->exec() == QDialog::Accepted) {
         // Populate the list with the newly created Documents
-        for (int i = 0; dlg->ui->ListLinked->count(); i++) {
+        for (int i = 0; i < dlg->ui->ListLinked->count(); i++) {
             QListWidgetItem* item = dlg->ui->ListLinked->item(i);
             DocProperty* docprop  = item->data(DOC_PROPERTY_ROLE).value<DocProperty*>();
             List.append(docprop);
@@ -116,13 +116,14 @@ void AddDocumentation::linkDoc(QWidget* parent)
     QListWidgetItem* item = ui->ListUnlinked->item(row);
     QString text          = item->text();
 
-    // TODO: check if this file matches an existing documentR to fill the form
+    // TODO: check if this file matches an existing document to fill the form
 
     DocProperty* document = EditDocProperty::newDocProperty(parent, text);
     if (document != nullptr) {
         item->setData(DOC_PROPERTY_ROLE, QVariant::fromValue(document));
         ui->ListUnlinked->takeItem(row);
         ui->ListLinked->addItem(item);
+        updateButtons();
     }
 }
 

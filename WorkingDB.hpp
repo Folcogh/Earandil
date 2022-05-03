@@ -1,7 +1,7 @@
 #ifndef WORKINGDB_HPP
 #define WORKINGDB_HPP
 
-#include "Document.hpp"
+#include "DocProperty.hpp"
 #include <QString>
 #include <QStringList>
 #include <QWidget>
@@ -20,10 +20,10 @@ class WorkingDB
     // Menus
     bool newDB(QWidget* parent);
     bool openDB(QWidget* parent);
-    bool save();
-    bool close(QWidget* parent);
+    bool saveDB(QWidget* parent);
+    bool closeDB(QWidget* parent);
 
-    bool docAdd(QWidget* parent);
+    void addDocument(QWidget* parent);
 
     // Predicates
     bool isActive() const { return Active; }

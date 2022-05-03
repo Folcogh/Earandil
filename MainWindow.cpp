@@ -2,6 +2,7 @@
 #include "./ui_MainWindow.h"
 #include "Global.hpp"
 #include "Languages.hpp"
+#include "QKeySequence"
 #include "Settings.hpp"
 #include "WorkingDB.hpp"
 #include <QKeySequence>
@@ -19,9 +20,9 @@ MainWindow::MainWindow(QWidget* parent)
     , MenuRecent(new QMenu("Recent...", this))
     , ActionExit(new QAction("Exit", this))
     , ActionDocSetPath(new QAction("Set path", this))
-    , ActionDocAdd(new QAction("Add docs", this))
-    , ActionDocRemoveOrpheans(new QAction("Remove orpheans", this))
-    , ActionDocUpdate(new QAction("Update", this))
+    , ActionAddDocument(new QAction("Add docs", this))
+    , ActionRemoveOrphean(new QAction("Remove orpheans", this))
+    , ActionUpdateDocuments(new QAction("Update", this))
 {
     ui->setupUi(this);
     setWindowTitle(WINDOW_TITLE);
@@ -36,7 +37,7 @@ MainWindow::MainWindow(QWidget* parent)
 
     // Documentation menu
     QMenu* MenuDocumentation = new QMenu("Documentation", this);
-    MenuDocumentation->addActions(QList<QAction*>({{this->ActionDocSetPath, this->ActionDocAdd, this->ActionDocRemoveOrpheans, this->ActionDocUpdate}}));
+    MenuDocumentation->addActions(QList<QAction*>({{this->ActionDocSetPath, this->ActionAddDocument, this->ActionRemoveOrphean, this->ActionUpdateDocuments}}));
 
     // Create and populate menu bar
     setMenuBar(new QMenuBar);
@@ -45,9 +46,17 @@ MainWindow::MainWindow(QWidget* parent)
 
     // Menu connections
     connect(this->ActionNew, &QAction::triggered, [this]() { actionNewTriggered(); });
+    connect(this->ActionOpen, &QAction::triggered, [this]() { actionOpenTriggered(); });
+    connect(this->ActionSave, &QAction::triggered, [this]() { actionSaveTriggered(); });
 
     // Documentation connections
-    connect(this->ActionDocAdd, &QAction::triggered, [this]() { actionDocAddTriggered(); });
+    connect(this->ActionAddDocument, &QAction::triggered, [this]() { actionAddDocumentTriggered(); });
+
+    // Keyboard shortcuts
+    this->ActionNew->setShortcut(QKeySequence(QKeySequence::New));
+    this->ActionOpen->setShortcut(QKeySequence(QKeySequence::Open));
+    this->ActionSave->setShortcut(QKeySequence(QKeySequence::Save));
+    this->ActionAddDocument->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_D));
 
     // Make UI consistent
     updateRecentFileMenu();
@@ -88,27 +97,40 @@ void MainWindow::updateUI()
         this->ActionSave->setEnabled(WorkingDB::instance()->isModified());
         this->ActionSaveAs->setEnabled(true);
         this->ActionDocSetPath->setEnabled(true);
-        this->ActionDocAdd->setEnabled(true);
-        this->ActionDocRemoveOrpheans->setEnabled(WorkingDB::instance()->hasOrpheans());
-        this->ActionDocUpdate->setEnabled(true);
+        this->ActionAddDocument->setEnabled(true);
+        this->ActionRemoveOrphean->setEnabled(true);
+        this->ActionUpdateDocuments->setEnabled(true);
     }
     else {
         this->MenuRecent->setEnabled(Settings::instance()->hasRecentAvailable());
         this->ActionSave->setEnabled(false);
         this->ActionSaveAs->setEnabled(false);
         this->ActionDocSetPath->setEnabled(false);
-        this->ActionDocAdd->setEnabled(false);
-        this->ActionDocRemoveOrpheans->setEnabled(false);
-        this->ActionDocUpdate->setEnabled(false);
+        this->ActionAddDocument->setEnabled(false);
+        this->ActionRemoveOrphean->setEnabled(false);
+        this->ActionUpdateDocuments->setEnabled(false);
     }
 }
 
 void MainWindow::actionNewTriggered()
 {
-    // Create the working db
     if (WorkingDB::instance()->newDB(this)) {
         Settings::instance()->addRecentDatabase(WorkingDB::instance()->getFilename());
         updateRecentFileMenu();
+        updateUI();
+    }
+}
+
+void MainWindow::actionOpenTriggered()
+{
+    WorkingDB::instance()->openDB(this);
+    updateRecentFileMenu();
+    updateUI();
+}
+
+void MainWindow::actionSaveTriggered()
+{
+    if (WorkingDB::instance()->saveDB(this)) {
         updateUI();
     }
 }
@@ -118,9 +140,8 @@ void MainWindow::openRecent(QString filename)
     (void)filename;
 }
 
-void MainWindow::actionDocAddTriggered()
+void MainWindow::actionAddDocumentTriggered()
 {
-    if (WorkingDB::instance()->docAdd(this)) {
-        updateUI();
-    }
+    WorkingDB::instance()->addDocument(this);
+    updateUI();
 }

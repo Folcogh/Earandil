@@ -31,15 +31,17 @@ class MainWindow : public QMainWindow
     QAction* ActionExit;
 
     // Documentation menu
-    QAction* ActionDocSetPath;        // Change the current documentatin folder. Usefull only if the doc directory move
-    QAction* ActionDocAdd;            // Look for unregistered documentations in the doc folder
-    QAction* ActionDocRemoveOrpheans; // Remove DB entries which haven't a doc file
-    QAction* ActionDocUpdate;         // Browse PIV, looking for doc updates
+    QAction* ActionDocSetPath;      // Change the current documentatin folder. Usefull only if the doc directory move
+    QAction* ActionAddDocument;     // Look for unregistered documentations in the doc folder
+    QAction* ActionRemoveOrphean;   // Remove DB entries which haven't a doc file
+    QAction* ActionUpdateDocuments; // Browse PIV, looking for doc updates
 
     // Actions triggers
     void actionNewTriggered();
+    void actionOpenTriggered();
+    void actionSaveTriggered();
     void openRecent(QString filename);
-    void actionDocAddTriggered();
+    void actionAddDocumentTriggered();
 
     void updateUI();
     void updateRecentFileMenu();

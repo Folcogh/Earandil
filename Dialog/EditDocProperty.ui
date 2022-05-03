@@ -32,9 +32,6 @@
      </item>
      <item row="2" column="1">
       <widget class="QLineEdit" name="EditDevStep">
-       <property name="frame">
-        <bool>true</bool>
-       </property>
        <property name="placeholderText">
         <string>100, 150, 300, ...</string>
        </property>
@@ -75,6 +72,9 @@
       <widget class="QComboBox" name="ComboMachine">
        <property name="editable">
         <bool>true</bool>
+       </property>
+       <property name="placeholderText">
+        <string>Type or select a machine name</string>
        </property>
       </widget>
      </item>

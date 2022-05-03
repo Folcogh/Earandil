@@ -84,5 +84,10 @@ void EditDocProperty::updateButtonOK()
         }
     }
 
+    // Wen want an entry in Machine name
+    if (ui->ComboMachine->currentIndex() == -1) {
+        enabled = false;
+    }
+
     ui->ButtonOK->setEnabled(enabled);
 }

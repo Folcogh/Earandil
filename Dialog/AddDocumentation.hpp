@@ -1,7 +1,7 @@
 #ifndef ADDDOCUMENTATION_HPP
 #define ADDDOCUMENTATION_HPP
 
-#include "Document.hpp"
+#include "DocProperty.hpp"
 #include <QDialog>
 #include <QList>
 #include <QWidget>

@@ -1,7 +1,7 @@
 #ifndef EDITDOCPROPERTY_HPP
 #define EDITDOCPROPERTY_HPP
 
-#include "Document.hpp"
+#include "DocProperty.hpp"
 #include <QDialog>
 #include <QString>
 #include <QWidget>

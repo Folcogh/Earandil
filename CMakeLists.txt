@@ -27,8 +27,8 @@ set(PROJECT_SOURCES
         Dialog/SetDBFilename.hpp
         Dialog/SetDBFilename.cpp
         Dialog/SetDBFilename.ui
-        Document.hpp
-        Document.cpp
+        DocProperty.hpp
+        DocProperty.cpp
         Languages.hpp
         Languages.cpp
         main.cpp
@@ -45,6 +45,7 @@ set(PROJECT_SOURCES
         Validator/ValidatorDevStep.cpp
         WorkingDB.hpp
         WorkingDB.cpp
+        ADBformat.txt
         SPECS.txt
         TODO.txt
         Global.hpp

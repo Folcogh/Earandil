@@ -1,4 +1,4 @@
-#include "Document.hpp"
+#include "DocProperty.hpp"
 #include "Global.hpp"
 #include "Languages.hpp"
 
@@ -35,6 +35,16 @@ DocProperty::DocProperty(QString StrNumber, QString Machine, QString DevStep, QS
 {
 }
 
+void DocProperty::getData(QString& StrNumber, QString& Machine, int& DevStep, int& SN_prefix, int& FromSN, int& ToSN) const
+{
+    StrNumber = this->StrNumber;
+    Machine   = this->Machine;
+    DevStep   = this->DevStep;
+    SN_prefix = this->SN_prefix;
+    FromSN    = this->FromSN;
+    ToSN      = this->ToSN;
+}
+
 // Read a document from a stream
 QDataStream& operator>>(QDataStream& stream, DocProperty** docprop)
 {
@@ -47,6 +57,22 @@ QDataStream& operator>>(QDataStream& stream, DocProperty** docprop)
 
     stream >> StrNumber >> Machine >> DevStep >> SN_prefix >> FromSN >> ToSN;
     *docprop = new DocProperty(StrNumber, Machine, DevStep, SN_prefix, FromSN, ToSN);
+
+    return stream;
+}
+
+// Write a document in a stream
+QDataStream& operator<<(QDataStream& stream, const DocProperty* docprop)
+{
+    QString StrNumber;
+    QString Machine;
+    int DevStep;
+    int SN_prefix;
+    int FromSN;
+    int ToSN;
+
+    docprop->getData(StrNumber, Machine, DevStep, SN_prefix, FromSN, ToSN);
+    stream << StrNumber << Machine << DevStep << SN_prefix << FromSN << ToSN;
 
     return stream;
 }

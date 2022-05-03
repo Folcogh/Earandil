@@ -1,0 +1,11 @@
+QString Name
+QString Documents folder
+qsizetype DocProperty.size()
+QList<DocProperty> DocProp
+
+
+Notes
+-----
+
+- known machines to be built on file opening (ensure strong consistency, remove need of list cleaning)
+- WorkingDB must save Filename when opening

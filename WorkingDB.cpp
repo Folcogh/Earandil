@@ -2,11 +2,11 @@
 #include "Dialog/AddDocumentation.hpp"
 #include "Dialog/EditDocPath.hpp"
 #include "Dialog/SetDBFilename.hpp"
-#include "Document.hpp"
 #include "Global.hpp"
 #include <QDataStream>
 #include <QDir>
 #include <QFile>
+#include <QFileDialog>
 #include <QFileInfo>
 #include <QList>
 #include <QMessageBox>
@@ -50,7 +50,7 @@ bool WorkingDB::newDB(QWidget* parent)
     QString name;
 
     // Early return if a database is already opened and user doen't want to save it
-    if (this->Active && !close(parent)) {
+    if (this->Active && !closeDB(parent)) {
         return false;
     }
 
@@ -60,7 +60,7 @@ bool WorkingDB::newDB(QWidget* parent)
         return false;
     }
 
-    // Define a db file
+    // Define a db filename
     if (!SetDBFilename::newFilename(parent, filename, name)) {
         return false;
     }
@@ -78,8 +78,80 @@ bool WorkingDB::newDB(QWidget* parent)
 
 bool WorkingDB::openDB(QWidget* parent)
 {
-    (void)parent;
-    return true;
+    bool ret = false;
+
+    if (closeDB(parent)) {
+        QString filename = QFileDialog::getOpenFileName(parent, WINDOW_TITLE, QDir::homePath(), APPLICATION_NAME " database (*." DATABASE_EXTENSION ")");
+        if (!filename.isNull()) {
+            QFile file(filename);
+            if (file.open(QIODeviceBase::ReadOnly)) {
+                QDataStream stream(&file);
+
+                // Read file
+                qsizetype DocpropCount;
+                stream >> this->Name >> this->Path >> DocpropCount;
+
+                for (int i = 0; i < DocpropCount; i++) {
+                    DocProperty* docprop;
+                    stream >> &docprop;
+                    this->DocProp.append(docprop);
+                }
+
+                // End: Check stream status
+                if (stream.status() == QDataStream::Ok) {
+                    refreshDocuments();
+                    this->Active   = true;
+                    this->Modified = false;
+                    this->Filename = filename;
+                    ret            = true;
+                }
+                else { // stream >>() failed
+                    QMessageBox::critical(parent, WINDOW_TITLE, QString("Error while reading file %1.").arg(filename));
+                }
+            }
+            else { // QFile::open() failed
+                QMessageBox::critical(parent, WINDOW_TITLE, QString("Error while opening file %1.").arg(filename));
+            }
+        }
+        else { // User cancelled file picking, nothing to do
+        }
+    }
+    else { // User didn't want to close, or something wrong happened. Nothing to do
+    }
+
+    return ret;
+}
+
+bool WorkingDB::saveDB(QWidget* parent)
+{
+    bool ret = false;
+
+    // Open file
+    QFile file(this->Filename);
+    if (file.open(QIODeviceBase::WriteOnly)) {
+        // Create stream
+        QDataStream stream(&file);
+
+        // Write data
+        stream << this->Name << this->Path << this->DocProp.size();
+        for (int i = 0; i < this->DocProp.size(); i++) {
+            stream << this->DocProp.at(i);
+        }
+
+        // Check stream status
+        if (stream.status() == QDataStream::Ok) {
+            this->Modified = false;
+            ret            = true;
+        }
+        else { // Stream status != Ok
+            QMessageBox::critical(parent, WINDOW_TITLE, QString("Unable to write into the file %1. Save operation cannot be completed.").arg(this->Filename));
+        }
+    }
+    else { // file.open() == false
+        QMessageBox::critical(parent, WINDOW_TITLE, QString("Unable to open the file %1. Save operation cannot be completed.").arg(this->Filename));
+    }
+
+    return ret;
 }
 
 //  close
@@ -88,7 +160,7 @@ bool WorkingDB::openDB(QWidget* parent)
 // Return true if DB was successfully closed
 // Return true if no DB is opened
 //
-bool WorkingDB::close(QWidget* parent)
+bool WorkingDB::closeDB(QWidget* parent)
 {
     // Database not opened: nothing to do
     if (!this->Active) {
@@ -112,7 +184,7 @@ bool WorkingDB::close(QWidget* parent)
 
     // User wants to save data before closing
     if (answer == QMessageBox::Yes) {
-        save();
+        saveDB(parent);
     }
 
     // In any case, we wan't to drop this DB
@@ -134,11 +206,6 @@ void WorkingDB::parseDocDirectory()
     Directory.setSorting(QDir::Name | QDir::IgnoreCase);
     Directory.setFilter(QDir::Files | QDir::Readable);
     this->UnlinkedDocumentations = Directory.entryList();
-}
-
-bool WorkingDB::save()
-{
-    return true; // TO BE REMOVED
 }
 
 void WorkingDB::refreshDocuments()
@@ -164,20 +231,20 @@ void WorkingDB::refreshDocuments()
         }
 
         // Update orphean status (WorkingDB + Document)
-        if (Match) {                                  // Match found
-            this->DocProp.at(i)->setOrphean(false);   // So flag Document as linked
+        if (Match) {                                // Match found
+            this->DocProp.at(i)->setOrphean(false); // So flag Document as linked
         }
         else {
-            this->Orpheans++;                        // Else update orphean count
-            this->DocProp.at(i)->setOrphean(true);   // And flag Document as orphean
+            this->Orpheans++;                      // Else update orphean count
+            this->DocProp.at(i)->setOrphean(true); // And flag Document as orphean
         }
     }
+
+    this->Modified = true;
 }
 
-bool WorkingDB::docAdd(QWidget* parent)
+void WorkingDB::addDocument(QWidget* parent)
 {
-    bool ret = false;
-
     refreshDocuments();
     if (this->UnlinkedDocumentations.isEmpty()) {
         QMessageBox::information(parent, WINDOW_TITLE, "No new document to add to the database");
@@ -186,10 +253,8 @@ bool WorkingDB::docAdd(QWidget* parent)
         QList<DocProperty*> list = AddDocumentation::addDocumentation(parent);
         if (!list.isEmpty()) {
             this->DocProp.append(list);
-            ret = true;
         }
     }
-    return ret;
 }
 
 void WorkingDB::addMachine(QString machine)

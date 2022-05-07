@@ -91,6 +91,7 @@ bool WorkingDB::openDB(QWidget* parent)
                 qsizetype DocpropCount;
                 stream >> this->Name >> this->Path >> DocpropCount;
 
+                // Read DocProperty list
                 for (int i = 0; i < DocpropCount; i++) {
                     DocProperty* docprop;
                     stream >> &docprop;
@@ -167,29 +168,25 @@ bool WorkingDB::closeDB(QWidget* parent)
         return true;
     }
 
-    // Database not modified: just drop it
-    if (!this->Modified) {
-        this->Active = false;
-        return true;
-    }
+    // Offer to save the DB if it was modified
+    if (this->Modified) {
+        QMessageBox::StandardButtons answer = QMessageBox::question(
+            parent, WINDOW_TITLE, "Do you want to save the current database?", QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
 
-    // Else ask the user if he wants to save it
-    QMessageBox::StandardButtons answer
-        = QMessageBox::question(parent, WINDOW_TITLE, "Do you want to save the current database?", QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+        // User wants to cancel closing process
+        if (answer == QMessageBox::Cancel) {
+            return false;
+        }
 
-    // User wants to cancel closing process
-    if (answer == QMessageBox::Cancel) {
-        return false;
-    }
-
-    // User wants to save data before closing
-    if (answer == QMessageBox::Yes) {
-        saveDB(parent);
+        // User wants to save data before closing
+        if (answer == QMessageBox::Yes) {
+            saveDB(parent);
+        }
     }
 
     // In any case, we wan't to drop this DB
+    qDeleteAll(this->DocProp.begin(), this->DocProp.end());
     this->Active = false;
-
     return true;
 }
 
@@ -219,11 +216,11 @@ void WorkingDB::refreshDocuments()
     this->Orpheans = 0;
 
     for (int i = 0; i < this->DocProp.size(); i++) {                    // Parse Document list
-        QString DocFilename = this->DocProp.at(i)->getFilename();       // Filename in Document
+        QString DocFilename = this->DocProp.at(i)->getFilename();       // Filename in DocProperty
         bool Match          = false;                                    // Default: no linked documentation
         for (int u = 0; u < this->UnlinkedDocumentations.size(); u++) { // Parse unlinked doc files
             QFileInfo Info(this->UnlinkedDocumentations.at(u));         // Read doc file name
-            if (Info.completeBaseName() == DocFilename) {               // Compare with Document name
+            if (Info.fileName() == DocFilename) {                       // Compare with Document name
                 this->UnlinkedDocumentations.removeAt(u);               // If match, remove from unlinked file list
                 Match = true;                                           // Linked now
                 break;                                                  // No need to continue

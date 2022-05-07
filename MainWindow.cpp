@@ -7,6 +7,7 @@
 #include "WorkingDB.hpp"
 #include <QKeySequence>
 #include <QMenuBar>
+#include <QMessageBox>
 #include <QString>
 #include <QStringList>
 
@@ -144,4 +145,26 @@ void MainWindow::actionAddDocumentTriggered()
 {
     WorkingDB::instance()->addDocument(this);
     updateUI();
+}
+
+void MainWindow::closeEvent(QCloseEvent* event)
+{
+    if (WorkingDB::instance()->isModified()) {
+        QMessageBox::StandardButton answer = QMessageBox::question(
+            this, WINDOW_TITLE, "Do you want to save the current database before closing?", QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+        if (answer == QMessageBox::Cancel) {
+            // User cancels closing
+            event->ignore();
+        }
+        else {
+            if (answer == QMessageBox::Yes) {
+                // User wants to save
+                WorkingDB::instance()->saveDB(this);
+            }
+            event->accept();
+        }
+    }
+    else { // Nothing modified, just accept the event
+        event->accept();
+    }
 }

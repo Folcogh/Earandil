@@ -12,11 +12,13 @@ DocProperty::DocProperty(QString StrNumber, QString Machine, int DevStep, int SN
     , Orphean(Orphean)
 {
     // Documentation filename format:
-    // <doctype>-<serial>-<language><version>
+    // <doctype>-<serial>-<language><version>.<extension>
     // Doctype is 2 or 3 alpha characters
     // Serial is an integer (random length)
     // Language and Version are integers (length = 2)
-    QString Suffix = this->StrNumber.last(LANGUAGE_LENGTH + VERSION_LENGTH);
+    QString Base = this->StrNumber;
+    Base.chop(QString(DOCUMENTATION_DOT_EXTENSION).size());
+    QString Suffix = Base.last(LANGUAGE_LENGTH + VERSION_LENGTH);
     this->Version  = Suffix.last(VERSION_LENGTH).toInt();
 
     // Translate the language code into a string

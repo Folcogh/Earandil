@@ -56,7 +56,6 @@ DocProperty* EditDocProperty::newDocProperty(QWidget* parent, QString filename)
     DocProperty* docprop = nullptr;
     EditDocProperty* dlg = new EditDocProperty(parent, filename);
     if (dlg->exec() == QDialog::Accepted) {
-        filename += DOCUMENTATION_DOT_EXTENSION;
         docprop = new DocProperty(filename,
                                   dlg->ui->ComboMachine->currentText(),
                                   dlg->ui->EditDevStep->text(),

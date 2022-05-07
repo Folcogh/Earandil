@@ -8,14 +8,12 @@
 - in clean database, clean useless machines. Here or there. Anyway, offer a way to merge/clean unwanted machines
 - in documentation menu: add "Open doc folder"
 - Set window titles more explicit...
-+ Make WorkingDB delete its DocProp* list
+- always check return value of WorkingDB::save()
 + write DlgEditDocument SN/DevStep validators
 + DldEditDocument: grab machine list from WorkingDB instance
 + add a placeholder in SetDBFilename::internal name
 + SetDBFilename::validate filename??
 + EditDocProperty: validate that ToSN_suffix is > FromSN_suffix
 + Rename Document files to DocProperty
-- always check return value of WorkingDB::save()
 + AddDocumentation OK button is disabled until an item is selected in the right column
-+ EditDocProperty supports empty machine name
-+ EditProperty doesn't accept validation when there is a valid ToSN entry
+- UIs tab order

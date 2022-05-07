@@ -2,6 +2,7 @@
 #define MAINWINDOW_HPP
 
 #include <QAction>
+#include <QCloseEvent>
 #include <QMainWindow>
 #include <QMenu>
 
@@ -45,5 +46,8 @@ class MainWindow : public QMainWindow
 
     void updateUI();
     void updateRecentFileMenu();
+
+    // Close
+    void closeEvent(QCloseEvent* event) override;
 };
 #endif // MAINWINDOW_HPP

@@ -1,0 +1,6 @@
++ EditDocProperty supports empty machine name
++ EditProperty doesn't accept validation when there is a valid ToSN entry
++ Make WorkingDB delete its DocProp* list
++ remove the DocProperty objects when closing a DB
++ version and language of DocProperty items are not decoded when a adb file is opened
+- known machine list is not built when opening a file

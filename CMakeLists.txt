@@ -46,6 +46,7 @@ set(PROJECT_SOURCES
         WorkingDB.hpp
         WorkingDB.cpp
         ADBformat.txt
+        BUGS.txt
         SPECS.txt
         TODO.txt
         Global.hpp

@@ -49,6 +49,7 @@ MainWindow::MainWindow(QWidget* parent)
     connect(this->ActionNew, &QAction::triggered, [this]() { actionNewTriggered(); });
     connect(this->ActionOpen, &QAction::triggered, [this]() { actionOpenTriggered(); });
     connect(this->ActionSave, &QAction::triggered, [this]() { actionSaveTriggered(); });
+    connect(this->ActionExit, &QAction::triggered, [this]() { close(); });
 
     // Documentation connections
     connect(this->ActionAddDocument, &QAction::triggered, [this]() { actionAddDocumentTriggered(); });
@@ -92,7 +93,7 @@ void MainWindow::updateRecentFileMenu()
 }
 
 void MainWindow::updateUI()
-{    
+{
     if (WorkingDB::instance()->isActive()) {
         this->MenuRecent->setEnabled(Settings::instance()->hasRecentAvailable());
         this->ActionSave->setEnabled(WorkingDB::instance()->isModified());

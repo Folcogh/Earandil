@@ -96,6 +96,7 @@ bool WorkingDB::openDB(QWidget* parent)
                     DocProperty* docprop;
                     stream >> &docprop;
                     this->DocProp.append(docprop);
+                    addMachine(docprop->getMachine());
                 }
 
                 // End: Check stream status
@@ -184,7 +185,7 @@ bool WorkingDB::closeDB(QWidget* parent)
         }
     }
 
-    // In any case, we wan't to drop this DB
+    // In any case, we want to drop this DB
     qDeleteAll(this->DocProp.begin(), this->DocProp.end());
     this->Active = false;
     return true;

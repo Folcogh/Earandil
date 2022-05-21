@@ -31,6 +31,7 @@ class DocProperty
     QString getFilename() const { return this->StrNumber; }
     void setOrphean(bool orphean) { this->Orphean = orphean; }
     void getData(QString& StrNumber, QString& Machine, int& DevStep, int& SN_prefix, int& FromSN, int& ToSN) const;
+    QString getMachine() const { return this->Machine; }
 
   private:
     // Description saved in the data file

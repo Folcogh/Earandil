@@ -45,10 +45,10 @@ set(PROJECT_SOURCES
         Validator/ValidatorDevStep.cpp
         WorkingDB.hpp
         WorkingDB.cpp
-        ADBformat.txt
-        BUGS.txt
-        SPECS.txt
-        TODO.txt
+        Docs/ADBformat.txt
+        Docs/BUGS.txt
+        Docs/SPECS.txt
+        Docs/TODO.txt
         Global.hpp
 )
 

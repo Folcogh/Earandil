@@ -237,22 +237,25 @@ void WorkingDB::refreshDocuments()
             this->DocProp.at(i)->setOrphean(true); // And flag Document as orphean
         }
     }
-
-    this->Modified = true;
 }
 
-void WorkingDB::addDocument(QWidget* parent)
+bool WorkingDB::addDocument(QWidget* parent)
 {
-    refreshDocuments();
+    bool ret = false;
+
     if (this->UnlinkedDocumentations.isEmpty()) {
         QMessageBox::information(parent, WINDOW_TITLE, "No new document to add to the database");
     }
     else {
         QList<DocProperty*> list = AddDocumentation::addDocumentation(parent);
         if (!list.isEmpty()) {
+            this->Modified = true;
             this->DocProp.append(list);
+            ret = true;
         }
     }
+
+    return ret;
 }
 
 void WorkingDB::addMachine(QString machine)

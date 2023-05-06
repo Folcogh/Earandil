@@ -23,7 +23,7 @@ class WorkingDB
     bool saveDB(QWidget* parent);
     bool closeDB(QWidget* parent);
 
-    void addDocument(QWidget* parent);
+    bool addDocument(QWidget* parent);
 
     // Predicates
     bool isActive() const { return Active; }
